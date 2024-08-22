@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, request, jsonify, url_for
 import stripe
 import secrets
 
@@ -6,10 +6,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = secrets.token_hex(16)
 
 stripe.api_key = 'sk_test_51P2EfNIS4MdDIAjNyeWsQlbLNZ3u1WoeyOvfCuXFtDLPvrxfzwYJe3kevMBZ7YwX6oHThHSjit8TEO7kR0o9GiBW000SFKKFfO'  # Replace with your Stripe secret key
-
-@app.route('/')
-def index():
-    return render_template('checkout.html')
 
 @app.route('/create-checkout-session', methods=['POST'])
 def create_checkout_session():
@@ -41,11 +37,11 @@ def create_checkout_session():
 
 @app.route('/payment-success')
 def payment_success():
-    return render_template('success.html')
+    return 'Payment Success'
 
 @app.route('/payment-failure')
 def payment_failure():
-    return render_template('failure.html')
+    return 'Payment Failed'
 
 if __name__ == '__main__':
-    app.run(port=3000, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)  # Use a different port for Flask
